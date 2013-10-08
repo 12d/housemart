@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+    <style type="text/css">
+        .selected {color: red}
+    </style>
+</head>
+<body>
+    <input id="J_input" type='button'/>
+    <div id="J_container"></div>
+<script src="webresources/js/lib/sea.js"></script>
+<script type="text/javascript">
+    seajs.config({
+        base: "webresources/js/",
+        alias: {
+            "jquery": "lib/jquery.js"
+        }
+    });
+    seajs.use(['jquery', 'test-upload']);
+</script>
+<script type="text/tpl" id="J_imgItemTpl">
+
+
+
+<li id="${id}">
+    <!-- progress bar -->
+    <div class="progress progress-striped active">
+        <p>${fileName}</p>
+        <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+            <span class="sr-only">45% Complete</span>
+        </div>
+    </div>
+    <!-- image -->
+    <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
+    <div class="btn-group hm-img-controls">
+        <a class="btn btn-default btn-sm" href="###">&and;</a>
+        <a class="btn btn-default btn-sm" href="###">&or;</a>
+        <a class="btn btn-default btn-sm" href="###">&otimes;</a>
+    </div>
+</li>
+</script>
+</body>
+</html>
