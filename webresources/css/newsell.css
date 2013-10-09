@@ -12,12 +12,18 @@
 .hm-img-tab-view{margin-top: 0px; border-top: none;}
 .hm-img-tab-view li{list-style: none; margin-top: 10px; position: relative; width: 260px; height: 210px; overflow: hidden;}
 .hm-img-controls{position: absolute; right: 10px; bottom: 25px;}
-.hm-img-controls a{opacity: 0.8}
+.hm-img-controls a{opacity: 0.6; background-image: url("../img/halflings.png"); background-repeat: no-repeat;}
 .hm-img-controls a:hover{opacity: 1; color: #1687e4;}
+
+.hm-up{background-position: -283px -93px;}
+.hm-down{background-position: -306px -93px;}
+.hm-remove{background-position: -306px 3px;}
 
 .hm-upload-wrap {color: #888; padding-top: 15px; padding-left: 10px;}
 .hm-upload-wrap .col-md-2 .btn-lg{margin-left: -8px;}
 .hm-upload-wrap p{padding-top: 1px; margin-left: -30px;}
 .hm-msg{margin: 10px 0 10px 3px; font-size: 24px;}
+
+
 
 

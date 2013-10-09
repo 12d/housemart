@@ -7,6 +7,7 @@
  */
 define(function(require, exports, module){
     var $ = require('jquery'),
+        NULL = null,
         NOOP = function(){};
 
     function removeFormArray(arr, item){
@@ -23,6 +24,8 @@ define(function(require, exports, module){
             onCancel: NOOP,
             onInit: NOOP,
             selector: 'a',
+            selected: NULL,
+            wrap: NULL,
             mapFn: function(item){
                 return $(item).html();
             },
@@ -42,7 +45,8 @@ define(function(require, exports, module){
         });
 
         self.__selected = [];
-        self.options.onInit.call(self);
+        self._init(options);
+        
     };
     TagSelector.prototype = {
         constructor: TagSelector,
@@ -68,6 +72,15 @@ define(function(require, exports, module){
                     self.select(item);
                 };
             });
+        },
+        _init: function(options){
+            var self = this,
+                selected = options.selected;
+
+            //init selected
+            selected && selected.length && self.selectByLabel(selected);
+            //call onInit event
+            self.options.onInit.call(self);
         },
         _isSelected: function(dom){
             return $(dom).hasClass(this.options.selectedCls);
