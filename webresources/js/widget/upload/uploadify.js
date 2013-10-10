@@ -412,7 +412,6 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 		// Get or set the settings data
 		settings : function(name, value, resetObjects) {
-
 			var args        = arguments;
 			var returnValue = value;
 
@@ -431,6 +430,9 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					returnValue =  settings[name];
 				} else {
 					switch (name) {
+                        case 'queueID':
+                            settings.queueID = value;
+                            break;
 						case 'uploader':
 							swfuploadify.setUploadURL(value);
 							break;
@@ -509,6 +511,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 				// Create a reference to the jQuery DOM object
 				var $this        = $(this),
 					swfuploadify = $this.data('uploadify');
+                //global instance
 
 				// Reset the queue information
 				swfuploadify.queueData.averageSpeed  = 0;

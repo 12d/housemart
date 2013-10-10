@@ -7,7 +7,7 @@ define(function (require, exports, module){
         width         : 150,
         itemTemplate  : $('#J_imgItemTpl').html(),
         queueID       : 'J_container',
-        buttonImage   : 'http://www.dianping.com/shoppic/res/swf_upload_btn.png',
+        buttonImage   : 'swf-upload-btn.png',
         onUploadStart : function(file){
 
         },

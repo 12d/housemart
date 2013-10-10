@@ -1,10 +1,11 @@
+.hidden{display: none;}
 .hm-page-title{margin-top: 0px;}
 .hm-inputs-wrap{width: 100%; background-color: #fff;margin: 10px 3px;}
 .hm-form-tip{text-align: right; margin-top: 15px; font-size: 12px}
 .hm-tag-link a{margin: 5px 5px 0 0px}
 
 .hm-img-list{padding: 0; margin: 10px 0 0 0;}
-.hm-img-list li{margin: 0 14px 0px 0; display: inline-block; vertical-align: middle; }
+.hm-img-list li{margin: 0 14px 0px 0; display: inline-block; vertical-align: middle; width: 280px; height: 210px;}
 .hm-img-list li .progress{height: 10px; width: 60%; text-align: center; margin-top: 80px; margin-left: 50px;}
 .hm-img-list li .btn-group .btn-sm{font-size: 20px; line-height: 0.8; padding: 3px 10px; vertical-align: middle;}
 .hm-img-controls .glyphicon {display: block; margin: 5px auto 10px; font-size: 24px;}
@@ -12,14 +13,19 @@
 .hm-img-tab-view{margin-top: 0px; border-top: none;}
 .hm-img-tab-view li{list-style: none; margin-top: 10px; position: relative; width: 260px; height: 210px; overflow: hidden;}
 .hm-img-controls{position: absolute; right: 10px; bottom: 25px;}
-.hm-img-controls a{opacity: 0.8}
+.hm-img-controls a{opacity: 0.6; background-image: url("../img/halflings.png"); background-repeat: no-repeat;}
 .hm-img-controls a:hover{opacity: 1; color: #1687e4;}
 
 .hm-upload-wrap {color: #888; padding: 15px 15px 15px 0}
+.hm-up{background-position: -283px -93px;}
+.hm-down{background-position: -306px -93px;}
+.hm-remove{background-position: -306px 3px;}
 .hm-upload-wrap .col-md-2 .btn-lg{margin-left: -8px;}
 .hm-upload-wrap p{padding-top: 5px; margin-left: -25px;}
 .hm-msg{margin: 10px 0 10px 3px; font-size: 24px;}
 
 .uploadify:hover .uploadify-button{background-position:0px -51px}
+
+
 
 

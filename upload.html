@@ -68,77 +68,23 @@
         <div class="col-md-4 hm-step after-active"><span></span><i>3、完成</i></div>
     </div>
     <!-- content wrap -->
-    <ul class="nav nav-tabs hm-img-tab">
-        <li class="active"><a href="#">房源图片(10)</a></li>
-        <li><a href="#">房型图片(18)</a></li>
-        <li><a href="#">小区图片(10)</a></li>
+    <ul class="nav nav-tabs hm-img-tab" id="J_imgCategory">
+        <li class="active"><a href="#J_imgsWrap-1" data-toggle="tab">房源图片(10)</a></li>
+        <li><a href="#J_imgsWrap-2" data-toggle="tab">房型图片(18)</a></li>
+        <li><a href="#J_imgsWrap-3" data-toggle="tab">小区图片(10)</a></li>
     </ul>
-    <div class="container hm-inputs-wrap hm-bordered hm-img-tab-view">
-        <ul class="hm-img-list" id="J_container">
-            <li>
-                <div class="progress progress-striped active">
-                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                        <span class="sr-only">45% Complete</span>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="progress progress-striped active">
-                    <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                        <span class="sr-only">45% Complete</span>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
-                <div class="btn-group hm-img-controls">
-                    <a class="btn btn-default btn-sm" href="###">&and;</a>
-                    <a class="btn btn-default btn-sm" href="###">&or;</a>
-                    <a class="btn btn-default btn-sm" href="###">&otimes;</a>
-                </div>
-            </li>
-            <li>
-                <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
-                <div class="btn-group hm-img-controls">
-                    <a class="btn btn-default btn-sm" href="###">&and;</a>
-                    <a class="btn btn-default btn-sm" href="###">&or;</a>
-                    <a class="btn btn-default btn-sm" href="###">&otimes;</a>
-                </div>
-            </li>
-            <li>
-                <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
-                <div class="btn-group hm-img-controls">
-                    <a class="btn btn-default btn-sm" href="###">&and;</a>
-                    <a class="btn btn-default btn-sm" href="###">&or;</a>
-                    <a class="btn btn-default btn-sm" href="###">&otimes;</a>
-                </div>
-            </li>
-            <li>
-                <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
-                <div class="btn-group hm-img-controls">
-                    <a class="btn btn-default btn-sm" href="###">&and;</a>
-                    <a class="btn btn-default btn-sm" href="###">&or;</a>
-                    <a class="btn btn-default btn-sm" href="###">&otimes;</a>
-                </div>
-            </li>
-            <li>
-                <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
-                <div class="btn-group hm-img-controls">
-                    <a class="btn btn-default btn-sm" href="###">&and;</a>
-                    <a class="btn btn-default btn-sm" href="###">&or;</a>
-                    <a class="btn btn-default btn-sm" href="###">&otimes;</a>
-                </div>
-            </li>
-            <li>
-                <img src="http://housemart.qiniudn.com/66 035 []_1379817049951.jpg" class="img-thumbnail" width="280" height="210"/>
-                <div class="btn-group hm-img-controls">
-                    <a class="btn btn-default btn-sm" href="###">&and;</a>
-                    <a class="btn btn-default btn-sm" href="###">&or;</a>
-                    <a class="btn btn-default btn-sm" href="###">&otimes;</a>
-                </div>
-            </li>
+    <div class="tab-content container hm-inputs-wrap hm-bordered hm-img-tab-view" id="J_imgsWrap">
+        <ul class=" tab-pane fade in active" id="J_imgsWrap-1">
+         q
+        </ul>
+        <ul class="hm-img-list tab-pane" id="J_imgsWrap-2">
+          x
+        </ul>
+        <ul class="hm-img-list tab-pane" id="J_imgsWrap-3">
+           w
         </ul>
     </div>
+
     <div class="hm-bordered hm-wrap row hm-upload-wrap">
         <div class="col-md-2">
             <button class="btn btn-warning btn-lg" id="J_upload">&nbsp;&nbsp;上传图片&nbsp;&nbsp;</button>
@@ -152,21 +98,23 @@
     </div>
     <!-- content wrap -->
 </div>
+<script>
+
+</script>
 <script type="text/tpl" id="J_imgItemTpl">
     <li id="${fileID}">
         <!-- progress bar -->
         <div class="progress progress-striped active">
-            <p>${fileName}</p>
-            <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                <span class="sr-only">45% Complete</span>
+            <!-- <p>${fileName}</p>  -->
+            <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
             </div>
         </div>
         <!-- image -->
-        <img class="img-thumbnail" width="280" height="210"/>
-        <div class="btn-group hm-img-controls">
-            <a class="btn btn-default btn-sm" href="###">&and;</a>
-            <a class="btn btn-default btn-sm" href="###">&or;</a>
-            <a class="btn btn-default btn-sm" href="###">&otimes;</a>
+        <img class="img-thumbnail" width="280" height="210" style="display:none"/>
+        <div class="btn-group hm-img-controls" style="display:none;">
+            <a class="btn btn-default btn-sm hm-up" href="###" data-action='up'>&nbsp;</a>
+            <a class="btn btn-default btn-sm hm-down" href="###" data-action='down'>&nbsp;</a>
+            <a class="btn btn-default btn-sm hm-remove" href="###" data-action='remove'>&nbsp;</a>
         </div>
     </li>
 </script>
@@ -178,7 +126,7 @@
             "jquery": "lib/jquery.js"
         }
     });
-    seajs.use(['jquery', 'test-upload']);
+    seajs.use(['jquery', 'upload']);
 </script>
 </body>
 </html>
