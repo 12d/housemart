@@ -2,7 +2,6 @@ define(function(require, exports, module){
     'use strict';
 
     function ImgItem(dom){
-        console.log(dom);
         this.dom = dom;
         dom.data('img-item', this);
     };
@@ -19,17 +18,16 @@ define(function(require, exports, module){
 
     ImgsManager.prototype = {
         constructor: ImgsManager,
-        _swap: function(a, b, max){
+        _swap: function(item, target){
             var cached = this.__cached,
-                aIndex = cached.indexOf(a),
-                bIndex = cached.indexOf(b);
+                originIndex = cached.indexOf(item),
+                index = cached.indexOf(target),
+                tempItem = cached.splice(originIndex, 1)[0];
 
-            console.log(aIndex, bIndex);
             //swap cache
-            cached[aIndex] = b;
-            cached[bIndex] = a;
+            cached.splice(index, 0, tempItem);
             //swap dom 
-            a.dom[bIndex >= max ? 'insertBefore' : 'insertAfter'](b.dom);   
+            item.dom[index < originIndex ? 'insertBefore' : 'insertAfter'](target.dom);   
             return this;
         },
         add: function(item){
@@ -37,19 +35,24 @@ define(function(require, exports, module){
         },
         remove: function(item, fn){
             var cached = this.__cached,
-                removed = cached.splice(cached.indexOf(item), 1);
-
-            fn && fn(removed[0]);
+                removed = cached.splice(cached.indexOf(item), 1)[0];
+            
+            removed.dom.remove();
+            fn && fn(removed);
             return this;
         },
         _move: function(item, step){
             var self = this,
                 cached = self.__cached,
                 max = cached.length,
-                index = cached.indexOf(item) + step,
-                target = cached[index>=max ? 0 : index<0 ? max : index];
-
-            this._swap(item, target, max);
+                originIndex = cached.indexOf(item),
+                index = originIndex + step,
+                target = cached[index = (index>=max ? 0 : index<0 ? (max-1) : index)],
+                tempItem = cached.splice(originIndex, 1)[0];
+            //swap cache
+            cached.splice(index, 0, tempItem);
+            //swap dom 
+            item.dom[index < originIndex ? 'insertBefore' : 'insertAfter'](target.dom);  
         },
         up: function(item){
             this._move(item, -1);
@@ -75,5 +78,4 @@ define(function(require, exports, module){
     $.each(imgs, function(index, dom){
         imgsManager.add(new ImgItem(imgs.eq(index)));
     });
-
 });
