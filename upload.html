@@ -11,7 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="webresources/css/lib/bootstrap.css" rel="stylesheet">
-
+    <!--<link rel="stylesheet" type="text/css" href="http://www.uploadify.com/wp-content/themes/uploadify/style.css">-->
     <!-- Custom styles for this template -->
     <link href="webresources/css/lib/base.css" rel="stylesheet">
     <link href="webresources/css/newsell.css" rel="stylesheet">
@@ -74,7 +74,7 @@
         <li><a href="#">小区图片(10)</a></li>
     </ul>
     <div class="container hm-inputs-wrap hm-bordered hm-img-tab-view">
-        <ul class="hm-img-list">
+        <ul class="hm-img-list" id="J_container">
             <li>
                 <div class="progress progress-striped active">
                     <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
@@ -141,7 +141,7 @@
     </div>
     <div class="hm-bordered hm-wrap row hm-upload-wrap">
         <div class="col-md-2">
-            <button class="btn btn-warning btn-lg">&nbsp;&nbsp;上传图片&nbsp;&nbsp;</button>
+            <button class="btn btn-warning btn-lg" id="J_upload">&nbsp;&nbsp;上传图片&nbsp;&nbsp;</button>
         </div>
         <p class="col-md-10">按住Ctrl或Shift可以多选图片,单张图片不超过10MB</br>尺寸不小于300*300px，支持jpg、png和bmp</p>
 
@@ -152,9 +152,33 @@
     </div>
     <!-- content wrap -->
 </div>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/tpl" id="J_imgItemTpl">
+    <li id="${fileID}">
+        <!-- progress bar -->
+        <div class="progress progress-striped active">
+            <p>${fileName}</p>
+            <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                <span class="sr-only">45% Complete</span>
+            </div>
+        </div>
+        <!-- image -->
+        <img class="img-thumbnail" width="280" height="210"/>
+        <div class="btn-group hm-img-controls">
+            <a class="btn btn-default btn-sm" href="###">&and;</a>
+            <a class="btn btn-default btn-sm" href="###">&or;</a>
+            <a class="btn btn-default btn-sm" href="###">&otimes;</a>
+        </div>
+    </li>
+</script>
+<script src="webresources/js/lib/sea.js"></script>
+<script type="text/javascript">
+    seajs.config({
+        base: "webresources/js/",
+        alias: {
+            "jquery": "lib/jquery.js"
+        }
+    });
+    seajs.use(['jquery', 'test-upload']);
+</script>
 </body>
 </html>

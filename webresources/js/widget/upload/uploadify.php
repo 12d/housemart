@@ -9,8 +9,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 $targetFolder = '/uploads'; // Relative to the root
 
 $verifyToken = md5('unique_salt' . $_POST['timestamp']);
-
-if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
+if (!empty($_FILES)) {
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
 	$targetFile = rtrim($targetPath,'/') . '/' . $_FILES['Filedata']['name'];
@@ -21,9 +20,12 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	
 	if (in_array($fileParts['extension'],$fileTypes)) {
 		move_uploaded_file($tempFile,$targetFile);
-		echo '1';
+		echo '{"url": "http://housemart.qiniudn.com/66 035 []_1379817049951.jpg"}';
 	} else {
 		echo 'Invalid file type.';
 	}
+} else{
+    echo 'error';
+
 }
 ?>

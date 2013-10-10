@@ -15,9 +15,11 @@
 .hm-img-controls a{opacity: 0.8}
 .hm-img-controls a:hover{opacity: 1; color: #1687e4;}
 
-.hm-upload-wrap {color: #888; padding-top: 15px; padding-left: 10px;}
+.hm-upload-wrap {color: #888; padding: 15px 15px 15px 0}
 .hm-upload-wrap .col-md-2 .btn-lg{margin-left: -8px;}
-.hm-upload-wrap p{padding-top: 1px; margin-left: -30px;}
+.hm-upload-wrap p{padding-top: 5px; margin-left: -25px;}
 .hm-msg{margin: 10px 0 10px 3px; font-size: 24px;}
+
+.uploadify:hover .uploadify-button{background-position:0px -51px}
 
 

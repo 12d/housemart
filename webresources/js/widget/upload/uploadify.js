@@ -759,7 +759,8 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			if ($.inArray('onUploadComplete', settings.overrideEvents) < 0) {
 				if (settings.removeCompleted) {
 					switch (file.filestatus) {
-						case SWFUpload.FILE_STATUS.COMPLETE:
+                        case SWFUpload.FILE_STATUS.COMPLETE:
+                            /*
 							setTimeout(function() { 
 								if ($('#' + file.id)) {
 									swfuploadify.queueData.queueSize   -= file.size;
@@ -770,6 +771,8 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 									});
 								}
 							}, settings.removeTimeout * 1000);
+							*/
+                            //xuweichen: custom for housemart
 							break;
 						case SWFUpload.FILE_STATUS.ERROR:
 							if (!settings.requeueErrors) {
@@ -955,6 +958,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 		// Triggered when a file upload returns a successful code
 		onUploadSuccess : function(file, data, response) {
+            console.log(data);
 			// Load the swfupload settings
 			var settings = this.settings;
 			var stats    = this.getStats();
