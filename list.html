@@ -59,7 +59,7 @@
     </div>
 </div>
 <!-- nav end -->
-
+<form action="/houseList.controller" method="get">
 <div class="container hm-container">
     <ul class="nav nav-tabs">
         <li class="active">
@@ -131,80 +131,8 @@
                         </div>
                     </td>
                     <td class="center">
-                        <a class="btn btn-primary btn-sm" href="/houseEdit.controller?houseId=524010" target="_blank">修改</a>
-                        <a class="btn btn-primary btn-sm margin-left" href="javascript:void(0)" onclick="deactiveHouse(524010)">下架</a>
-                    </td>
-                    <td class="center">2013-09-24 11:14</td>
-                    <td class="center">2013-09-24 11:14</td>
-                </tr>
-                <tr>
-                    <td>
-                        524010
-                    </td>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="" title="" class="hm-thumb">
-                                    <img class="img-thumbnail" src="http://housemart.qiniudn.com/IMAG0265_1379846851680.jpg" alt=""/>
-                                </a>
-                            </div>
-                            <div class="col-md-9 hm-thumb-desc">
-                                <p>5室3厅5卫3阳台 1580万元 </p>
-                                <a href="#">上海 - 张江 - 白金瀚宫（号）单元（室）</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="center">
-                        <a class="btn btn-primary btn-sm" href="/houseEdit.controller?houseId=524010" target="_blank">修改</a>
-                        <a class="btn btn-primary btn-sm margin-left" href="javascript:void(0)" onclick="deactiveHouse(524010)">下架</a>
-                    </td>
-                    <td class="center">2013-09-24 11:14</td>
-                    <td class="center">2013-09-24 11:14</td>
-                </tr>
-                <tr>
-                    <td>
-                        524010
-                    </td>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="" title="" class="hm-thumb">
-                                    <img class="img-thumbnail" src="http://housemart.qiniudn.com/IMAG0265_1379846851680.jpg" alt=""/>
-                                </a>
-                            </div>
-                            <div class="col-md-9 hm-thumb-desc">
-                                <p>5室3厅5卫3阳台 1580万元 </p>
-                                <a href="#">上海 - 张江 - 白金瀚宫（号）单元（室）</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="center">
-                        <a class="btn btn-primary btn-sm" href="/houseEdit.controller?houseId=524010" target="_blank">修改</a>
-                        <a class="btn btn-primary btn-sm margin-left" href="javascript:void(0)" onclick="deactiveHouse(524010)">下架</a>
-                    </td>
-                    <td class="center">2013-09-24 11:14</td>
-                    <td class="center">2013-09-24 11:14</td>
-                </tr>
-                <tr>
-                    <td>
-                        524010
-                    </td>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="" title="" class="hm-thumb">
-                                    <img class="img-thumbnail" src="http://housemart.qiniudn.com/IMAG0265_1379846851680.jpg" alt=""/>
-                                </a>
-                            </div>
-                            <div class="col-md-9 hm-thumb-desc">
-                                <p>5室3厅5卫3阳台 1580万元 </p>
-                                <a href="#">上海 - 张江 - 白金瀚宫（号）单元（室）</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="center">
-                        <a class="btn btn-primary btn-sm" href="/houseEdit.controller?houseId=524010" target="_blank">修改</a>
-                        <a class="btn btn-primary btn-sm margin-left" href="javascript:void(0)" onclick="deactiveHouse(524010)">下架</a>
+                        <a class="btn btn-default btn-sm" href="/houseEdit.controller?houseId=524010" target="_blank">修改</a>
+                        <a class="btn btn-default btn-sm" href="javascript:void(0)" onclick="deactiveHouse(524010)">下架</a>
                     </td>
                     <td class="center">2013-09-24 11:14</td>
                     <td class="center">2013-09-24 11:14</td>
@@ -212,19 +140,93 @@
 
                 </tbody>
             </table>
-            <ul class="pagination hm-list-page">
-                <li class="disabled"><a href="#">«</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">»</a></li>
+            <table class="table table-bordered table-striped">
+                <colgroup>
+                    <col class="col-md-1">
+                    <col class="col-md-5">
+                    <col class="col-md-2">
+                    <col class="col-md-2">
+                    <col class="col-md-2">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>房源编号</th>
+                    <th>房源基本信息</th>
+                    <th>房源管理</th>
+                    <th>审核时间</th>
+                    <th>申请时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        524010
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="" title="" class="hm-thumb">
+                                    <img class="img-thumbnail" src="http://housemart.qiniudn.com/IMAG0265_1379846851680.jpg" alt=""/>
+                                </a>
+                            </div>
+                            <div class="col-md-9 hm-thumb-desc">
+                                <p>5室3厅5卫3阳台 1580万元 </p>
+                                <a href="#">上海 - 张江 - 白金瀚宫（号）单元（室）</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="center">
+                        <a class="btn btn-default btn-sm" href="/houseEdit.controller?houseId=524010" target="_blank">修改</a>
+                        <a class="btn btn-default btn-sm" href="javascript:void(0)" onclick="deactiveHouse(524010)">下架</a>
+                        <a class="btn btn-default btn-sm" href="javascript:void(0)" onclick="deactiveHouse(524010)">上架</a>
+                    </td>
+                    <td class="center">2013-09-24 11:14</td>
+                    <td class="center">2013-09-24 11:14</td>
+                </tr>
+
+                </tbody>
+            </table>
+            <ul class="pagination hm-list-page" id="J_pagebar">
             </ul>
         </div>
     </div>
 </div>
+    <input type="hidden" id="J_currentPage"/>
+</form>
+<script id="J_pagebarTpl" type="tpl">
+    {{if total>0}}
+    {{if current>0}}
+        <li><a href="javascript:void(0);" data-page="${current-1}">«</a></li>
+    {{/if}}
+    {{if current<2}}
+        {{loop(var index=0; Math.min(5,total+1); index++)}}
+        <li {{if current==index}} class="active"{{/if}}><a href="javascript:void(0);" data-page="${index}">${index+1}</a></li>
+        {{/loop}}
+    {{else current>total-2}}
+        {{loop(var index= Math.max(0,total-4);total+1;index++)}}
+        <li {{if current==index}} class="active"{{/if}}><a href="javascript:void(0);" data-page="${index}">${index+1}</a></li>
+    {{/loop}}
+    {{else}}
+        {{loop(var index= Math.max(0,current-2);Math.min(current+3,total+1);index++)}}
+        <li {{if current==index}} class="active"{{/if}}><a href="javascript:void(0);" data-page="${index}">${index+1}</a></li>
+        {{/loop}}
+    {{/if}}
+    {{if current<total}}
+        <li><a href="javascript:void(0);" data-page="${current+1}">»</a></li>
+    {{/if}}
+    {{/if}};
 
+</script>
+<script src="webresources/js/lib/sea.js"></script>
+<script type="text/javascript">
+    seajs.config({
+        base: "webresources/js/",
+        alias: {
+            "jquery": "lib/jquery.js"
+        }
+    });
+    seajs.use(['lib/bootstrap', 'jquery', 'list']);
+</script>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

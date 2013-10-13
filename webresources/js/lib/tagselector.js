@@ -110,7 +110,8 @@ define(function(require, exports, module){
         getMappedSelected: function(mapFn){
             mapFn = mapFn || this.options.mapFn;
             return $.isFunction(mapFn) ? $.map(this.__selected, mapFn) : this.__selected;    
-        },
+        }
+
 
     };
 

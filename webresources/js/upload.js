@@ -13,22 +13,27 @@ define(function(require, exports, module){
         constructor: ImgItem
     };
 
-    function ImgsManager(){
+    function ImgsManager(options){
         var self = this;
 
+        self.options = options;
         self.__cached = [];
     };
 
     ImgsManager.prototype = {
         constructor: ImgsManager,
         add: function(item){
-            this.__cached.push(item);
+            var cached = this.__cached;
+
+            cached.push(item);
+            this.options.onChange.call(this, cached.length);
         },
         remove: function(item, fn){
             var cached = this.__cached,
                 removed = cached.splice(cached.indexOf(item), 1)[0];
             
             removed.dom.remove();
+            this.options.onChange.call(this, cached.length);
             fn && fn(removed);
             return this;
         },
@@ -54,7 +59,29 @@ define(function(require, exports, module){
     };
     // init
     var App,
-        imgsManager = new ImgsManager(),
+        imgsTabsWrap = $('#J_imgCategory'),
+        imgsWrapCount1 = imgsTabsWrap.find('li>a[data-category=J_imgsWrap-1]>i'),
+        imgsWrapCount2 = imgsTabsWrap.find('li>a[data-category=J_imgsWrap-2]>i'),
+        imgsWrapCount3 = imgsTabsWrap.find('li>a[data-category=J_imgsWrap-3]>i'),
+
+        imgsManagers = {
+           'J_imgsWrap-1': new ImgsManager({
+                onChange: function(count){
+                    imgsWrapCount1.html(count);
+                }
+           }),
+           'J_imgsWrap-2': new ImgsManager({
+                onChange: function(count){
+                    imgsWrapCount2.html(count);
+                }
+           }),
+           'J_imgsWrap-3': new ImgsManager({
+                onChange: function(count){
+                    imgsWrapCount3.html(count);
+                }
+           })
+        },
+        imgsManager = imgsManagers['J_imgsWrap-1'],
         imgsWrap = $('#J_imgsWrap'),
         imgs = imgsWrap.find('li');
 
@@ -113,17 +140,19 @@ define(function(require, exports, module){
                     imageWrap.find('img').attr('src', data.url);
                     imageWrap.children().show();
                     //add to imgsManager
+
                     imgsManager.add(new ImgItem(imageWrap));
                 }
             });
         },
         initTabs: function(){
             var self = this,
-                uploadify = self.uploader.data('uploadify');
+                uploadify = self.uploader;
 
             $('#J_imgCategory a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                uploadify.uploadify('settings', 'uploader', 'a');
-                uploadify.uploadify('')
+                var category = e.target.getAttribute('data-category');
+                imgsManager = imgsManagers[category];
+                uploadify.uploadify('settings', 'queueID', category);
             });
 
         }

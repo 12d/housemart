@@ -16,7 +16,7 @@
 .hm-img-controls a{opacity: 0.6; background-image: url("../img/halflings.png"); background-repeat: no-repeat;}
 .hm-img-controls a:hover{opacity: 1; color: #1687e4;}
 
-.hm-upload-wrap {color: #888; padding: 15px 15px 15px 0}
+.hm-upload-wrap {color: #888; padding: 15px 15px 10px 0}
 .hm-up{background-position: -283px -93px;}
 .hm-down{background-position: -306px -93px;}
 .hm-remove{background-position: -306px 3px;}

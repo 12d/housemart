@@ -157,27 +157,32 @@
             </div>
             <div class="form-group">
                 <label  class="col-lg-3 control-label">房源标签</label>
+                <div class="col-lg-6">
+                    <input type="input" class="form-control" readonly id="J_selectedTags" autocomplete="off"/>
+                </div>
+                <!--
                 <div class="col-lg-6 input-group">
-                    <input type="input" class="form-control" readonly id="J_selectedTags">
+                    <input type="input" class="form-control" readonly id="J_selectedTags" autocomplete="off">
                     <div class="input-group-btn">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="collapse" id="J_toggleTags" data-target="#J_tagsWrap">
                             选择标签 <span class="caret"></span>
                         </button>
                     </div>
                 </div>
+                -->
             </div>
             <div class="form-group">
                 <label class="col-lg-3 control-label"></label>
-                <div class="col-lg-6 hm-tag-link" id="J_tagsWrap">
+                <div class="col-lg-6 hm-tag-link collapse in" id="J_tagsWrap">
                     <a href="###" class="btn btn-default">韩式豪式豪</a>
                     <a href="###" class="btn btn-default">韩式豪</a>
                     <a href="###" class="btn btn-default">韩式</a>
-                    <a href="###" class="btn btn-default btn-info">韩式豪</a>
+                    <a href="###" class="btn btn-default">韩式豪</a>
                     <a href="###" class="btn btn-default">韩豪</a>
                     <a href="###" class="btn btn-default">韩式</a>
                     <a href="###" class="btn btn-default">韩式豪</a>
                     <a href="###" class="btn btn-default">韩豪</a>
-                    <a href="###" class="btn btn-default btn-info">韩式</a>
+                    <a href="###" class="btn btn-default">韩式</a>
                     <a href="###" class="btn btn-default">韩式豪</a>
                     <a href="###" class="btn btn-default">韩豪</a>
                     <a href="###" class="btn btn-default">韩式</a>
@@ -196,6 +201,7 @@
         </form>
     </div>
 </div>
+
 <script src="webresources/js/lib/sea.js"></script>
 <script type="text/javascript">
     seajs.config({

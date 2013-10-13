@@ -1,5 +1,6 @@
 define(function(require, exports, module){
     'use strict';
+    require('lib/bootstrap');
 
     var Validate = require('lib/form/validate'),
         Field = require('lib/form/field'),
@@ -133,14 +134,13 @@ define(function(require, exports, module){
             return this;   
         },
         initTagSelector: function(selectedLabels){
-            var self = this,
-                tags;
+            var tags;
 
             tags = new TagSelector({
                 selectedCls: 'btn-info',
                 wrap: $('#J_tagsWrap'),
-                onSelect: $.proxy(fillSelectedTags, self),
-                onCancel: $.proxy(fillSelectedTags, self)
+                onSelect: $.proxy(fillSelectedTags, tags),
+                onCancel: $.proxy(fillSelectedTags, tags)
             });
             selectedLabels && selectedLabels.length && tags.selectByLabel(selectedLabels);
             return this;        
@@ -150,5 +150,5 @@ define(function(require, exports, module){
         }
     }
     
-    NewSell.init();
+    NewSell.init({});
 });

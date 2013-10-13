@@ -1,0 +1,367 @@
+<html>
+<head>
+</head>
+<title>我的盘源</title>
+<body>
+<div class="tabs">
+			<span class="${((tabIndex!1) == 1) ? string('tab-focus', 'tab')}">
+				<a href="/external/myHouseList.controller?tabIndex=1">上架房源 (${onboardCount})</a>
+			</span>
+			<span class="${((tabIndex!1) == 2) ? string('tab-focus', 'tab')}">
+				<a href="/external/myHouseList.controller?tabIndex=2">审核中 (${auditCount})</a>
+			</span>
+			<span class="${((tabIndex!1) == 3) ? string('tab-focus', 'tab')}">
+				<a href="/external/myHouseList.controller?tabIndex=3">拒绝 (${rejectCount})</a>
+			</span>
+			<span class="${((tabIndex!1) == 4) ? string('tab-focus', 'tab')}">
+				<a href="/external/myHouseList.controller?tabIndex=4">下架房源 (${offboardCount})</a>
+			</span>
+			
+			<span class="tab-right">
+				<a href="/houseEdit.controller?viewType=rent" target="_blank">发布租房</a>
+			</span>
+			<span class="tab-right">
+				<a href="/houseEdit.controller?viewType=sale" target="_blank">发布售房</a>
+			</span>
+    <div class="clear"></div>
+</div>
+<div class="tab-content">
+
+    <div style="margin:0 0 20px 0;">
+        <input name="filter-sale-rent" type="radio" value="0" onclick="filterHouseList()" ${(saleRent == "0") ? string('checked="checked"', '')} />
+        租 + 售
+        <input name="filter-sale-rent" type="radio" value="1" onclick="filterHouseList()" ${(saleRent == "1") ? string('checked="checked"', '')} />
+        租
+        <input name="filter-sale-rent" type="radio" value="2" onclick="filterHouseList()" ${(saleRent == "2") ? string('checked="checked"', '')} />
+        售
+        <input name="tab-index" type="hidden" value="${(tabIndex!1)}" />
+				<span style="margin-left:20px;">
+					小区
+					<select name="residenceId" value="${residenceId}" id="filter-residence" onchange="filterHouseList()">
+                        <option value="0">所有小区</option>
+                        <#if accountResidences??>
+                            <#list accountResidences as accountResidence>
+                                <#if ((residenceId?number) == accountResidence.residenceID) >
+                                    <option selected="selected" value="${accountResidence.residenceID}">
+                                        ${accountResidence.residencePinyinName?substring(0,1)?upper_case}
+                                        ${accountResidence.residenceName}
+                                    </option>
+                                    <#else>
+                                        <option value="${accountResidence.residenceID}">
+                                            ${accountResidence.residencePinyinName?substring(0,1)?upper_case}
+                                            ${accountResidence.residenceName}
+                                        </option>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </select>
+				</span>
+    </div>
+
+    <table>
+        <tr>
+            <th style="width:100px;">房源编号</th>
+            <th>房源基本信息</th>
+            <#if ((tabIndex!1) == 3) >
+                <th style="width:200px;">拒绝理由</th>
+            </#if>
+            <th style="width:200px;text-align:center;">房源管理</th>
+            <#if ((tabIndex!1) == 1) >
+                <th style="width:150px;text-align:center;">审核时间</th>
+            </#if>
+            <#if ((tabIndex!1) == 4) >
+                <th style="width:130px;">下架人</th>
+                <th style="width:200px;">下架理由</th>
+            </#if>
+            <th style="width:150px;text-align:center;">申请时间</th>
+        </tr>
+        <#if houseList??>
+            <#list houseList as house>
+                <tr id="house-${(house.ID)!}">
+                    <td>${(house.ID)!}</td>
+                    <td>
+                        <div style="width:90px;height:80px;float:left;">
+                            <a href="${(house.picURL)!}" target="_blank">
+                                <img class="house-pic" src="${(house.picURL)!}" onload="housePicLoaded(this)" />
+                            </a>
+                        </div>
+                        <div style="margin:0 0 0 90px;line-height:35px;">
+                            <span class="room-type">${(house.RoomType!)}</span>
+                            <#if ((house.rentRentStatus!0) == 1)>
+                                ${(house.rentPrice!0)}元/月
+                            </#if>
+                            <#if ((house.saleSaleStatus!0) == 1)>
+                                ${(house.salePrice!0)/10000}万元
+                            </#if>
+                            <br/>
+                            <a href="/external/houseView.controller?houseId=${house.ID!}" target="_blank">
+                                上海 -
+                                ${(house.regionName)!} -
+                                ${(house.residenceName)!}
+                                ${(house.BuildingNo)!}栋（号）${(house.CellNo)!}单元（室）
+                            </a>
+                        </div>
+                    </td>
+                    <#if ((tabIndex!1) == 3) >
+                        <td>
+                            ${(house.auditComments)!}
+                        </td>
+                    </#if>
+
+                    <td style="text-align:center;">
+                        <#if ((tabIndex!1) == 1) >
+                            <a href="/houseEdit.controller?houseId=${(house.ID)!}" target="_blank">修改</a>
+                            |
+                            <a href="javascript:void(0)" onclick="deactiveHouse(${(house.ID)!})">下架</a>
+                            <#else>
+                                <a href="/houseEdit.controller?houseId=${(house.ID)!}" target="_blank">修改</a>
+                        </#if>
+
+                        <#if ((tabIndex!1) != 1) >
+                            |
+                            <a href="javascript:void(0)" onclick="deleteHouse(${(house.ID)!})">删除</a>
+                        </#if>
+
+                        <#if ((tabIndex!1) > 2) >
+                            |
+                            <a href="javascript:void(0)" onclick="activeHouse(${(house.ID)!})">申请上架</a>
+                        </#if>
+                    </td>
+
+                    <#if ((tabIndex!1) == 1) >
+                        <td style="text-align:center;">
+                            ${(house.onboardTime?string("yyyy-MM-dd hh:mm"))!}
+                        </td>
+                    </#if>
+                    <#if ((tabIndex!1) == 4) >
+                        <td>${(house.auditor)!}</td>
+                        <td>${(house.rentMemo)!}${(house.saleMemo)!}</td>
+                    </#if>
+                    <td style="text-align:center;">
+                        ${(house.applyTime?string("yyyy-MM-dd hh:mm"))!}
+                    </td>
+                </tr>
+            </#list>
+        </#if>
+    </table>
+</div>
+
+<input type="hidden" value="${(param.totalCount)!0}" id="totalCount"/>
+<input type="hidden" name="page" value="${(param.page)!}" id="page"/>
+<input type="hidden" name="pageSize" value="${(param.pageSize)!}" id="pageSize"/>
+
+<div id="pagination" class="pagination">
+</div>
+
+<div id="dlg-delete-house" title="删除房源">
+    <div class="dlg-content">
+        你确定要删除房源#<span id="dlg-delete-house-no"></span>吗？
+    </div>
+    <div class="dlg-buttons">
+        <input type="button" value="确定" onclick='doDeleteHouse()' />
+        <input type="button" value="取消" onclick='$("#dlg-delete-house").dialog("close")'/>
+        <input type="hidden" value="" id="dlg-delete-house-id" />
+    </div>
+</div>
+
+<div id="dlg-deactive-house" title="下架房源">
+    <div class="dlg-content">
+        你确定要下架房源#<span id="dlg-deactive-house-no"></span>吗？
+    </div>
+    <div class="dlg-buttons">
+        <input type="button" value="确定" onclick='doDeactiveHouse()' />
+        <input type="button" value="取消" onclick='$("#dlg-deactive-house").dialog("close")'/>
+        <input type="hidden" value="" id="dlg-deactive-house-id" />
+    </div>
+</div>
+
+<div id="dlg-active-house" title="申请房源上架">
+    <div class="dlg-content">
+        你确定要申请房源#<span id="dlg-deactive-house-no"></span>上架吗？
+    </div>
+    <div class="dlg-buttons">
+        <input type="button" value="确定" onclick='doActiveHouse()' />
+        <input type="button" value="取消" onclick='$("#dlg-active-house").dialog("close")'/>
+        <input type="hidden" value="" id="dlg-active-house-id" />
+    </div>
+</div>
+
+<style>
+    .clear {clear:both;}
+    .tabs {overflow:hidden;height:27px;}
+    .tabs span a {text-decoration:none;color:#000;}
+    .tabs span {float:left;margin:0 10px 0;display:block;line-height:25px;padding:0 5px;}
+    .tab {background:#ccc;border:1px solid #888;}
+    .tabs .tab-right {float:right;background:#333;border:1px solid #000;line-height:22px;}
+    .tabs .tab-right a {color:#fff;}
+    .tab-focus {border:1px solid #888;border-bottom:1px solid #fff;}
+    .tab-content {border:1px solid #888;padding:20px;margin-top:-1px;}
+    .tab-content table {width:100%;}
+    .house-pic {width:80px; height:60px;display:none;}
+</style>
+
+<script>
+
+    var callbackCounter = 0;
+
+    $(document).ready(function(){
+        init();
+    });
+
+    function init(){
+        $("#pagination").pagination(parseInt($("#totalCount").val()), {
+            num_edge_entries: 2,
+            num_display_entries: 4,
+            callback: pageselectCallback,
+            items_per_page:$("#pageSize").val(),
+            current_page:parseInt($("#page").val())
+        });
+
+        $("#dlg-delete-house").dialog(
+                {
+                    autoOpen: false,
+                    width: 500,
+                    modal: true,
+                    resizable: false,
+                });
+
+        $("#dlg-deactive-house").dialog(
+                {
+                    autoOpen: false,
+                    width: 500,
+                    modal: true,
+                    resizable: false,
+                });
+
+        $("#dlg-active-house").dialog(
+                {
+                    autoOpen: false,
+                    width: 500,
+                    modal: true,
+                    resizable: false,
+                });
+
+        renderHouseList();
+
+    }
+
+    function pageselectCallback(page_index, jq){
+        if(callbackCounter > 0) {
+            var filter_sale_rent = $("input[name='filter-sale-rent']:checked").val();
+            var tab_index = $("input[name='tab-index']").val();
+            location.href = "/external/myHouseList.controller?tabIndex=" + tab_index + "&saleRent=" + filter_sale_rent + "&page=" + page_index;
+        }
+        callbackCounter++;
+    }
+
+    function housePicLoaded(obj)
+    {
+        obj.style.display = "block";
+    }
+
+    function deleteHouse(id)
+    {
+        $("#dlg-delete-house-no").html(id);
+        $("#dlg-delete-house").dialog("open");
+        $("#dlg-delete-house-id").val(id);
+    }
+
+    function doDeleteHouse()
+    {
+        var house_id = $("#dlg-delete-house-id").val();
+        $.ajax({
+            type: "post",
+            url: "/ajax/deleteHouse.controller",
+            data: {id: house_id},
+            dataType: "json",
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (data) {
+                $("#house-" + house_id).remove();
+                $("#dlg-delete-house").dialog("close")
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function deactiveHouse(id)
+    {
+        $("#dlg-deactive-house-no").html(id);
+        $("#dlg-deactive-house").dialog("open");
+        $("#dlg-deactive-house-id").val(id);
+    }
+
+    function doDeactiveHouse()
+    {
+        var house_id = $("#dlg-deactive-house-id").val();
+
+        $.ajax({
+            type: "post",
+            url: "/ajax/deactiveHouse.controller",
+            data: {id: house_id},
+            dataType: "json",
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (data) {
+                $("#house-" + house_id).remove();
+                $("#dlg-deactive-house").dialog("close")
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function activeHouse(id)
+    {
+        $("#dlg-active-house-no").html(id);
+        $("#dlg-active-house").dialog("open");
+        $("#dlg-active-house-id").val(id);
+    }
+
+    function doActiveHouse()
+    {
+        var house_id = $("#dlg-active-house-id").val();
+        $.ajax({
+            type: "post",
+            url: "/ajax/applyHouse.controller",
+            data: {id: house_id},
+            dataType: "json",
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (data) {
+                $("#house-" + house_id).remove();
+                $("#dlg-active-house").dialog("close")
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function renderHouseList()
+    {
+        $(".room-type").each(function()
+        {
+            var raw_type = $(this).html();
+            if (raw_type.length == 4)
+            {
+                var type = raw_type.charAt(0) + "室" +
+                        raw_type.charAt(1) + "厅" +
+                        raw_type.charAt(2) + "卫" +
+                        raw_type.charAt(3) + "阳台";
+                $(this).html(type);
+            }
+            else
+            {
+                $(this).html("");
+            }
+        });
+    }
+
+    function filterHouseList()
+    {
+        var filter_sale_rent = $("input[name='filter-sale-rent']:checked").val();
+        var filter_residence_id = $("#filter-residence").val();
+        var tab_index = $("input[name='tab-index']").val();
+        location.href = "/external/myHouseList.controller?tabIndex=" + tab_index + "&saleRent=" + filter_sale_rent + "&residenceId=" + filter_residence_id;
+    }
+</script>
+</body>
+</html>

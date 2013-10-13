@@ -1,0 +1,177 @@
+<form action="/myHouseList.controller" method="get">
+    <div class="container hm-container">
+        <ul class="nav nav-tabs">
+            <li class="${((tabIndex!1) == 1) ? string('active', '')}">
+                <a href="/external/myHouseList.controller?tabIndex=1">上架房源(${onboardCount})</a>
+            </li>
+            <li class="${((tabIndex!1) == 2) ? string('active', '')}">
+                <a href="/external/myHouseList.controller?tabIndex=2">审核中(${auditCount})</a>
+            </li>
+            <li class="${((tabIndex!1) == 3) ? string('active', '')}">
+                <a href="/external/myHouseList.controller?tabIndex=3">拒绝(${rejectCount})</a>
+            </li>
+            <li class="${((tabIndex!1) == 4) ? string('active', '')}">
+                <a href="/external/myHouseList.controller?tabIndex=4">下架房源(${offboardCount})</a>
+            </li>
+        </ul>
+        <div class="hm-wrap">
+            <div class="hm-filter">
+                <input name="tab-index" type="hidden" value="${(tabIndex!1)}" />
+                <label class="radio">
+                    <input type="radio" value="option1" ${(saleRent == "0") ? string('checked="checked"', '')}/> 租 + 售
+                </label>
+                <label class="radio">
+                    <input type="radio" value="option2" ${(saleRent == "1") ? string('checked="checked"', '')}/> 租
+                </label>
+                <label class="radio">
+                    <input type="radio" value="option3" ${(saleRent == "2") ? string('checked="checked"', '')}/> 售
+                </label>
+                <label class="select">
+                    <select class="form-control" name="residenceId" value="${residenceId}">
+                        <option value="0">所有小区</option>
+                        <#if accountResidences??>
+                            <#list accountResidences as accountResidence>
+                                <#if ((residenceId?number) == accountResidence.residenceID) >
+                                    <option selected="selected" value="${accountResidence.residenceID}">
+                                        ${accountResidence.residencePinyinName?substring(0,1)?upper_case}
+                                        ${accountResidence.residenceName}
+                                    </option>
+                                    <#else>
+                                        <option value="${accountResidence.residenceID}">
+                                            ${accountResidence.residencePinyinName?substring(0,1)?upper_case}
+                                            ${accountResidence.residenceName}
+                                        </option>
+                                </#if>
+                            </#list>
+                        </#if>
+                    </select>
+                </label>
+            </div>
+            <div class="btn-group hm-action-btn">
+                <a href="/houseEdit.controller?viewType=rent" class="btn btn-primary btn-md">发布售房</a>
+                <a href="/houseEdit.controller?viewType=sale" class="btn btn-primary btn-md">发布租房</a>
+            </div>
+            <div class="hm-room-list">
+                <table class="table table-bordered table-striped">
+                    <colgroup>
+                        <col class="col-md-1">
+                        <col class="col-md-5">
+                        <#if ((tabIndex!1) == 3) >
+                        <col class="col-md-2">
+                        </#if>
+                        <#if ((tabIndex!1) == 1) >
+                        <col class="col-md-2">
+                        </#if>
+                        <#if ((tabIndex!1) == 4) >
+                            <col class="col-md-2">
+                            <col class="col-md-2">
+                        </#if>
+                        <col class="col-md-2">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>房源编号</th>
+                        <th>房源基本信息</th>
+                        <#if ((tabIndex!1) == 3) >
+                        <th>拒绝理由</th>
+                        </#if>
+                        <th>房源管理</th>
+                        <#if ((tabIndex!1) == 1) >
+                        <th>审核时间</th>
+                        </#if>
+                        <#if ((tabIndex!1) == 4) >
+                        <th>下架人</th>
+                        <th>下架理由</th>
+                        </#if>
+                        <th>申请时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#if houseList??>
+                    <#list houseList as house>
+                    <tr>
+                        <td>
+                            ${(house.ID)!}
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a href="${(house.picURL)!}" title="" class="hm-thumb">
+                                        <img class="img-thumbnail" src="${(house.picURL)!}" alt=""/>
+                                    </a>
+                                </div>
+                                <div class="col-md-9 hm-thumb-desc">
+                                    <p>
+                                        ${(house.RoomType!)}
+                                        <#if ((house.rentRentStatus!0) == 1)>
+                                        ${(house.rentPrice!0)}元/月
+                                        </#if>
+                                        <#if ((house.saleSaleStatus!0) == 1)>
+                                            ${(house.salePrice!0)/10000}万元
+                                        </#if>
+                                    </p>
+                                    <a href="/external/houseView.controller?houseId=${house.ID!}" target="_blank">
+                                        上海 -
+                                        ${(house.regionName)!} -
+                                        ${(house.residenceName)!}
+                                        ${(house.BuildingNo)!}栋（号）${(house.CellNo)!}单元（室）
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <#if ((tabIndex!1) == 3) >
+                            <td>
+                                ${(house.auditComments)!}
+                            </td>
+                        </#if>
+                        <td class="center">
+                            <#if ((tabIndex!1) == 1) >
+                                <a class="btn btn-primary btn-sm" href="/houseEdit.controller?houseId=${(house.ID)!}" target="_blank">修改</a>
+                                |
+                                <a class="btn btn-primary btn-sm" href="javascript:void(0)" data-house-id="${(house.ID)!}">下架</a>
+                                <#else>
+                                <a class="btn btn-primary btn-sm" href="/houseEdit.controller?houseId=${(house.ID)!}" target="_blank">修改</a>
+                            </#if>
+                            <#if ((tabIndex!1) != 1) >
+                                |
+                                <a class="btn btn-primary btn-sm" href="javascript:void(0)" data-house-id="${(house.ID)!}">删除</a>
+                            </#if>
+
+                            <#if ((tabIndex!1) > 2) >
+                                |
+                                <a class="btn btn-primary btn-sm" href="javascript:void(0)" data-house-id="${(house.ID)!}">申请上架</a>
+                            </#if>
+                        </td>
+                        <#if ((tabIndex!1) == 1) >
+                            <td class="center">
+                                ${(house.onboardTime?string("yyyy-MM-dd hh:mm"))!}
+                            </td>
+                        </#if>
+                        <#if ((tabIndex!1) == 4) >
+                            <td>${(house.auditor)!}</td>
+                            <td>${(house.rentMemo)!}${(house.saleMemo)!}</td>
+                        </#if>
+                        <td class="center">
+                            ${(house.applyTime?string("yyyy-MM-dd hh:mm"))!}
+                        </td>
+                    </tr>
+                    </#list>
+                    </#if>
+                    </tbody>
+                </table>
+                <input type="hidden" value="${(param.totalCount)!0}" id="totalCount"/>
+                <input type="hidden" name="page" value="${(param.page)!}" id="page"/>
+                <input type="hidden" name="pageSize" value="${(param.pageSize)!}" id="pageSize"/>
+                <ul class="pagination hm-list-page">
+                    <li class="disabled"><a href="#">«</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</form>
