@@ -81,7 +81,7 @@ define(function(require, exports, module){
                 }
            })
         },
-        imgsManager = imgsManagers['J_imgsWrap-1'],
+        imgsManager = imgsManagers['J_imgsWrap-1'], //默认第一个tab
         imgsWrap = $('#J_imgsWrap'),
         imgs = imgsWrap.find('li');
 
@@ -108,6 +108,15 @@ define(function(require, exports, module){
                 action && imgsManager[action](target.parents('li').data('img-item'));
             });
         },
+        bindEvents: function(){
+            var self = this;
+
+            //提交事件
+            $('#J_complete').bind('click', function(e){
+                e.preventDefault();
+                self.submit();
+            });
+        },
         uploader: null,
         /**
          * upload component initializing
@@ -121,7 +130,7 @@ define(function(require, exports, module){
                 itemTemplate  : $('#J_imgItemTpl').html(),
                 queueID       : 'J_imgsWrap-1',
                 buttonImage   : 'webresources/img/swf-upload-btn.png',
-                fileSizeLimit: '100 MB',
+                fileSizeLimit: '10 MB',
                 onUploadStart : function(file){
 
                 },
@@ -133,11 +142,13 @@ define(function(require, exports, module){
                 onUploadSuccess: function(file, data){
                     data = $.parseJSON(data);
 
-                    var imageWrap = $('#'+file.id);
+                    var imageWrap = $('#'+file.id),
+                        img;
                     //remove progress bar
                     imageWrap.find('.progress').remove();
 
-                    imageWrap.find('img').attr('src', data.url);
+                    img = imageWrap.find('img');
+                    img.attr('src', data.url).attr('data-img-id', data.id);
                     imageWrap.children().show();
                     //add to imgsManager
 
@@ -151,10 +162,23 @@ define(function(require, exports, module){
 
             $('#J_imgCategory a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 var category = e.target.getAttribute('data-category');
+
                 imgsManager = imgsManagers[category];
                 uploadify.uploadify('settings', 'queueID', category);
             });
 
+        },
+        getPicIds: function(){
+            $.each(imgsManagers, function(item, index){
+                
+            });       
+        },
+        submit: function(){
+            var self = this,
+                picIds = self.getPicIds();
+
+            //提交动作    
+            form.submit();
         }
     };
 

@@ -9,6 +9,7 @@ body {
         margin-left: 0px;
     }
 }
+.pagination > li > a.ellipsis:hover{background: #fff; cursor: default;}
 .hm-alert{padding: 5px;}
 .hm-msg{line-height: 3; margin-bottom: 0; margin-top: 0;}
 .hm-required{color:red; line-height: 17px; vertical-align: middle;}
@@ -36,5 +37,6 @@ padding-left:50px; -webkit-text-shadow:5px 2px 6px #111;}
 .hm-step-wrap .active{background-color: aliceblue; position: relative; left: 1px;}
 .hm-step-wrap .active span{background: url("../../img/breadcrumb_active.png") 2px -25px no-repeat white;}
 .hm-step-wrap .after-active span {background-color: aliceblue}
+
 
 

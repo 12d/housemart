@@ -20,7 +20,6 @@ define(['jquery'], function(require, exports, module){
 window.jQuery = require('jquery');
 !function ($) {
   $(function () {
-
     "use strict"; // jshint ;_;
 
 

@@ -6,92 +6,105 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+        <link href="webresources/css/lib/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="webresources/css/lib/base.css" rel="stylesheet">
+    <link href="webresources/css/list.css" rel="stylesheet">
     <style type="text/css">
         .selected {color: red}
     </style>
 </head>
 <body>
-<div id="wrap"></div>
-<script id="test" type="text/html">
-    <% if (total>0) { %>
-    <% if (current>0) { %>
-        <li><a href="javascript:void(0);" data-page="<%=(current-1)%>}">«</a></li>
-    <%}%>
-    <% if (current<2) { %>
-        <% for(var index=0; i<$min(5,total+1); index++){ %>
-        <li <% if (current==index) { %> class="active"<%}%> ><a href="javascript:void(0);" data-page="<%=index%>"><%=(index-1)%></a></li>
-        <% } %>
-    <% } %>    
-    <% if (current>total-2){ %>
-        <% for(var index= $max(0,total-4);total+1;index++){ %>
-        <li <% if (current==index) {%> class="active"<%}%> ><a href="javascript:void(0);" data-page="<%=index%>"><%=(index-1)%></a></li>
-        <% } %>
-    <% } %>    
-    <% if(current<=total-2 && current>=2) {%>
-        <% for(var index= $max(0,current-2);index<$min(current+3, total+1); index++){ %>
-        <li <% if (current==index) {%> class="active"<%}%> ><a href="javascript:void(0);" data-page="<%=index%>"><%=(index-1)%></a></li>
-        <% } %>
-    <% } %>
-    <% if (current<total){ %>
-        <li><a href="javascript:void(0);" data-page="<%=current+1%>">»</a></li>
-    <% } %>
-    <% } %>;
+    <!-- Button trigger modal -->
+  <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg" style="display:none;">Launch demo modal</a>
 
-</script>
+  <!-- Modal -->
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<ul class="pagination hm-list-page" id="J_pagebar" style="display:none;">
+            </ul>
 <script type="text/ctrip-tpl" id="J_pageNavBarTpl">
-  {{if total>0}}
-    {{#! 显示首页 }}
-    <a href="javascript:;" {{if current !== start }}data-page="${current-1}"{{/if}} class="page-ctrl {{if current == start }}disable{{/if}}">&lt; 上一页</a>
-    {{if current !== start }}
-    <a href="javascript:;" data-page="${ start }">${ start }</a>
-    {{/if}}
+  <% if (total>0) {%>
+    <li><a href="javascript:void(0);" class="<% if (current == start) { %>disable<% } %>" data-page="<%=(current-1)%>}">«</a></li>
+    <% if (current !== start) { %>
+    <li><a href="javascript:;" data-page="<%=start%>"><%=start%></a></li>
+    <% } %>
 
-    {{#! 显示前序页 }}
-    {{if current > padding}}
-    <span class="ellipsis">...</span>
-    {{loop (i, len) (current - padding + 1),current,1 }}
-    <a href="javascript:;" data-page="${i}">${i}</a>
-    {{/loop}}
-    {{else}}
-    {{loop (i, len) 2,current,1}}
-    <a href="javascript:;" data-page="${i}">${ i }</a>
-    {{/loop}}
-    {{/if}}
 
-    {{#! 显示当前页 }}
-    <a href="javascript:;" class="current">${ current }</a>
+    <% if (current > padding) { %>
+    <li><a class="ellipsis" href="javascript:;">...</a></li>
+    <% for (var i=current - padding + 1;i<current;i++) {  %>
+    <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>
+    <% } %>
+    <% } %>
+    <% if(current <= padding) {%>
+    <% for (var i=2;i<current;i++) { %>
+    <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>
+    <% } %>
+    <% } %>
 
-    {{#! 显示后序页 }}
-    {{if current + padding <= total }}
-    {{loop (i, len) current + 1, current + padding,1}}
-    <a href="javascript:;" data-page="${i}">${ i }</a>
-    {{/loop}}
-    <span class="ellipsis">...</span>
-    {{else}}
-    {{loop (i, len) current + 1, total,1 }}
-    <a href="javascript:;" data-page="${i}">${ i }</a>
-    {{/loop}}
-    {{/if}}
 
-    {{#! 显示末页 }}
-    {{if current !== total }}
-    <a href="javascript:;" data-page="${ total }">${ total }</a>
-    {{/if}}
-    <a href="javascript:;" {{if current !== total }}data-page="${current+1}"{{/if}} class="page-ctrl {{if current == total }}disable{{/if}}">下一页 &gt;</a>
-    {{/if}}
+    <li class="active"><a href="javascript:;"><%=current%></a></li>
+
+
+    <% if (current + padding <= total) { %>
+    <% for (var i=current+1; i< current+padding;i++) { %>
+    <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>
+    <% } %>
+    <li><a class="ellipsis" href="javascript:;">...</a></li>
+    <% } %>
+    
+    <% if (current + padding > total) {%>
+    <% for(var i=current+1; i<total;i++) {  %>
+    <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>
+    <% } %>
+    <% } %>
+
+
+    <% if (current !== total) { %>
+    <li><a href="javascript:;" data-page="<%=total%>"><%=total%></a></li>
+    <% } %>
+    <li><a href="javascript:;" <% if (current !== total) { %>data-page="<%=current+1%>"<% } %> class="page-ctrl <% if (current == total) { %>disable<% } %>">»</a></li>
+  <% } %>
 
 </script> 
 </script>
+<script src="webresources/js/lib/sea.js"></script>
 <script src="webresources/js/lib/jquery.js"></script>
 <script src="webresources/js/lib/mvc.js"></script>
+<script src="webresources/js/lib/bootstrap.js"></script>
 <script>
 template.helper('$min', Math.min);
 template.helper('$max', Math.max);
-console.log(template.render('test', {current:3, total:10, start: 2, padding: 3}));
-$('#wrap').html(template.render('test', {current:30, total:100, start: 1, padding: 5})); 
+//console.log(template.render('test', {current:3, total:10, start: 2, padding: 3}));
+$('#J_pagebar').html(template.render('J_pageNavBarTpl', {current:80, total:100, start: 1, padding: 5})); 
 </script>
 <script>
-//$('#wrap').html($('#J_pageNavBarTpl').tmpl({current:3, total:10, start: 2, padding: 3}));
+seajs.config({
+        base: "webresources/js/",
+        alias: {
+            "jquery": "lib/jquery.js"
+        }
+    });
+seajs.use(['lib/bootstrap', 'jquery', 'test']);
+
 </script>
+ 
 </body>
 </html>

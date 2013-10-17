@@ -202,10 +202,10 @@ var _getCache = function (id) {
     if (cache === undefined && 'document' in global) {
         var elem = document.getElementById(id);
         
-        if (elem) {
-            var source = elem.value || elem.innerHTML;
-            return exports.compile(id, source.replace(/^\s*|\s*$/g, ''));
-        }
+        
+        var source = elem && (elem.value || elem.innerHTML) || id; //support 'ftl' in text by xuwei.chen
+        return exports.compile(id, source.replace(/^\s*|\s*$/g, ''));
+        
         
     } else if (_cache.hasOwnProperty(id)) {
     
