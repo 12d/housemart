@@ -69,7 +69,7 @@
     <% } %>
     <li><a class="ellipsis" href="javascript:;">...</a></li>
     <% } %>
-    
+
     <% if (current + padding > total) {%>
     <% for(var i=current+1; i<total;i++) {  %>
     <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>
@@ -83,7 +83,7 @@
     <li><a href="javascript:;" <% if (current !== total) { %>data-page="<%=current+1%>"<% } %> class="page-ctrl <% if (current == total) { %>disable<% } %>">»</a></li>
   <% } %>
 
-</script> 
+</script>
 </script>
 <script src="webresources/js/lib/sea.js"></script>
 <script src="webresources/js/lib/jquery.js"></script>
@@ -93,7 +93,7 @@
 template.helper('$min', Math.min);
 template.helper('$max', Math.max);
 //console.log(template.render('test', {current:3, total:10, start: 2, padding: 3}));
-$('#J_pagebar').html(template.render('J_pageNavBarTpl', {current:80, total:100, start: 1, padding: 5})); 
+$('#J_pagebar').html(template.render('J_pageNavBarTpl', {current:80, total:100, start: 1, padding: 5}));
 </script>
 <script>
 seajs.config({

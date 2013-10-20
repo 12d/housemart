@@ -5,7 +5,7 @@ define(function(require, exports, module){
     var Validate = require('lib/form/validate'),
         Field = require('lib/form/field'),
         TagSelector = require('lib/tagselector'),
-        NewSell,
+        NewRent,
         $ = require('jquery'),
         validator = new Validate(),
         releaseForm = $('#J_releaseForm'),
@@ -24,13 +24,13 @@ define(function(require, exports, module){
     };
 
     function fillSelectedTags(){
-        selectedTagsInput.val(this.getMappedSelected().join(','));
-        tagsIds.val(this.getMappedSelected(function(item){
+         selectedTagsInput.val(this.getMappedSelected().join(','));
+         tagsIds.val(this.getMappedSelected(function(item){
             return item.getAttribute('data-id');
-        }).join(','));
+         }).join(','));
     };
 
-    NewSell = {
+    NewRent = {
         addFields: function(){
             //add fields for form
             validator.addFields([
@@ -137,6 +137,43 @@ define(function(require, exports, module){
             }); 
             return this;   
         },
+        initEquipment: function(){
+            var wrap = $('#J_equipments'),
+                equips = wrap.find('.equipment'),
+                selectAll = wrap.find('#J_selectAll'),
+                unselectAll = wrap.find('#J_unselectAll');
+
+            selectAll.bind('click', function(e){
+                e.preventDefault();
+                $.each(equips, function(_, equip){
+                    equip.checked=true;
+                });
+            });
+
+            unselectAll.bind('click', function(e){
+                e.preventDefault();
+                $.each(equips, function(_, equip){
+                    equip.checked=false;
+                });
+            });
+            return this;
+
+        },
+        initPayment: function(){
+            var pay = $('#J_pay'),
+                mortgage = $('#J_mortgage'),
+                payment = $('#J_payment');
+
+            pay.bind('change', function(){
+                mortgage[0].selectedIndex = 0;
+                mortgage.trigger('change');
+            });
+
+            mortgage.bind('change', function(){
+                payment.val('付'+pay.val()+'押'+mortgage.val());
+            });
+            return this;
+        },
         initTagSelector: function(selectedLabels){
             var tags;
 
@@ -165,13 +202,12 @@ define(function(require, exports, module){
             });
             return this;
         },
-
         init: function(options){
-            this.bindSubmit().addFields().initTagSelector(options.selectedLabels).initCtrlTags();
+            this.bindSubmit().addFields().initEquipment().initPayment().initTagSelector(options.selectedLabels).initCtrlTags();
         }
     }
     
-    NewSell.init({
+    NewRent.init({
         selectedLabels: tagsIds.val() && tagsIds.val().split(',')
     });
 });

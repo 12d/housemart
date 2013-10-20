@@ -1,24 +1,35 @@
-define(function (require, exports, module){
-module.exports ='\
-{{if total>0}}\
-    {{if current>0}}\
-    <li><a href="javascript:void(0);" data-page="${current-1}">«</a></li>\
-    {{/if}}\
-    {{if current<2}} \
-    {{loop(var index=0; Math.min(5,total+1); index++)}}\
-    <li {{if current==index}} class="active"{{/if}}><a href="javascript:void(0);" data-page="${index}">${index+1}</a></li>\
-    {{/loop}} \
-    {{else current>total-2}}\
-    {{loop(var index= Math.max(0,total-4);total+1;index++)}}\
-    <li {{if current==index}} class="active"{{/if}}><a href="javascript:void(0);" data-page="${index}">${index+1}</a></li>\
-    {{/loop}}\
-    {{else}}\
-    {{loop(index= Math.max(0,current-2);Math.min(current+3,total+1);index++)}}\
-    <li {{if current==index}} class="active"{{/if}}><a href="javascript:void(0);" data-page="${index}">${index+1}</a></li>\
-    {{/loop}}\
-    {{/if}}\
-    {{if current<total}}\
-    <li><a href="javascript:void(0);" data-page="${current+1}">»</a></li>\
-    {{/if}}\
-{{/if}}';
+define(function(require, exports, module){
+    module.exports = '<% if (total>0) {%>\
+    <li><a href="javascript:void(0);" class="<% if (current == start) { %>disable<% } %>" data-page="<%=(current-1)%>}">«</a></li>\
+    <% if (current !== start) { %>\
+        <li><a href="javascript:;" data-page="<%=start%>"><%=start%></a></li>\
+        <% } %>\
+        <% if (current > padding) { %>\
+            <li><a class="ellipsis" href="javascript:;">...</a></li>\
+            <% for (var i=current - padding + 1;i<current;i++) {  %>\
+            <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>\
+            <% } %>\
+            <% } %>\
+                <% if(current <= padding) {%>\
+                    <% for (var i=2;i<current;i++) { %>\
+                    <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>\
+                    <% } %>\
+                    <% } %>\
+                        <li class="active"><a href="javascript:;"><%=current%></a></li>\
+                            <% if (current + padding <= total) { %>\
+                                <% for (var i=current+1; i< current+padding;i++) { %>\
+                                <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>\
+                                <% } %> \
+                                <li><a class="ellipsis" href="javascript:;">...</a></li>\
+                                <% } %>\
+                                    <% if (current + padding > total) {%>\
+                                        <% for(var i=current+1; i<total;i++) {  %>\
+                                        <li><a href="javascript:;" data-page="<%=i%>"><%=i%></a></li>\
+                                        <% } %>\
+                                        <% } %>\
+                                            <% if (current !== total) { %>\
+                                                <li><a href="javascript:;" data-page="<%=total%>"><%=total%></a></li>\
+                                                <% } %>\
+                                         <li><a href="javascript:;" <% if (current !== total) { %>data-page="<%=current+1%>"<% } %> class="page-ctrl <% if (current == total) { %>disable<% } %>">»</a></li>\
+                                                    <% } %>'
 });

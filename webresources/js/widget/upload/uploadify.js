@@ -614,6 +614,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			var queuedFile = {};
 			for (var n in this.queueData.files) {
 				queuedFile = this.queueData.files[n];
+                /*  取消限制重复选择逻辑
 				if (queuedFile.uploaded != true && queuedFile.name == file.name) {
 					var replaceQueueItem = confirm('The file named "' + file.name + '" is already in the queue.\nDo you want to replace the existing item in the queue?');
 					if (!replaceQueueItem) {
@@ -626,6 +627,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 						this.queueData.filesReplaced++;
 					}
 				}
+				*/
 			}
 
 			// Get the size of the file
@@ -658,11 +660,11 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 			// Create the file item template
 			if (settings.itemTemplate == false) {
-				settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item">\
+				settings.itemTemplate = '<div id="{fileID}" class="uploadify-queue-item">\
 					<div class="cancel">\
-						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
+						<a href="javascript:$(\'#{instanceID}\').uploadify(\'cancel\', \'{fileID}\')">X</a>\
 					</div>\
-					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
+					<span class="fileName">{fileName} ({fileSize})</span><span class="data"></span>\
 					<div class="uploadify-progress">\
 						<div class="uploadify-progress-bar"><!--Progress Bar--></div>\
 					</div>\
@@ -674,9 +676,9 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 				
 				// Replace the item data in the template
 				itemHTML = settings.itemTemplate;
-				console.log(itemData);
 				for (var d in itemData) {
-					itemHTML = itemHTML.replace(new RegExp('\\$\\{' + d + '\\}', 'g'), itemData[d]);
+                    //'${xxx}' is conflict with java ftl
+					itemHTML = itemHTML.replace(new RegExp('\\{' + d + '\\}', 'g'), itemData[d]);
 				}
 
 				// Add the file item to the queue
@@ -930,6 +932,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			if (this.queueData.uploadQueue.length == 0) {
 				this.queueData.uploadSize = file.size;
 			}
+
 			if (settings.checkExisting) {
 				$.ajax({
 					type    : 'POST',
@@ -961,7 +964,6 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 		// Triggered when a file upload returns a successful code
 		onUploadSuccess : function(file, data, response) {
-            console.log(data);
 			// Load the swfupload settings
 			var settings = this.settings;
 			var stats    = this.getStats();

@@ -61,6 +61,7 @@ define(function(require, exports, module){
             return self;
         },
         selectByLabel: function(label, filter){
+            if(!label) return;
             var self = this,
                 options = this.options,
                 labels = $.isArray(label) ? label : [label],

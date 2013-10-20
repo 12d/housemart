@@ -126,8 +126,8 @@ define(function (require, exports, module){
     Mbox.CONFIRM = 'confirm';
     Mbox.confirm = function(msg, title, callback){
         var box = Mbox.__confirmMbox || (Mbox.__confirmMbox = new Mbox({mode: Mbox.CONFIRM, onYes: function(){
-            callback.call(self);
-            self.close();
+            callback.call(box);
+            this.close();
         }}));
         
         box.open(msg, title);

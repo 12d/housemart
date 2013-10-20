@@ -7,16 +7,9 @@ define(function (require, exports, module){
     'use strict';
 
     var $ = require('jquery'),
+        mvc = require('lib/mvc'),
         mix = $.extend,
         NOOP = function(){};
-
-    $.extend($.tmpl.tag, {
-        "loop": {
-            _default: {$2: "var i=1;i<=1;i++"},
-            open: 'for ($2){',
-            close: '};'
-        }
-    });
 
     function PageBar(options){
         var defaultOptions = {
@@ -29,8 +22,8 @@ define(function (require, exports, module){
         this.total = opts.total;
         this.wrap = opts.wrap;
         this.options = opts;
-        this.current = 0;
-        this.update(opts.current, opts.total);
+        this.current = options.current || 0;
+        this.update(this.current, opts.total);
         this._bindEvent();
     };
 
@@ -73,15 +66,11 @@ define(function (require, exports, module){
             });
         },
         _render: function(tpl, data){
-            //console.log(tpl.text());
-            console.log(data);
-            //this.wrap.html($.tmpl.render(tpl, data));
-            tpl.tmpl(data, this.wrap);
-            //this.wrap.html(tpl.tmpl(data));
+            this.wrap.html(mvc.render(tpl, data));
         },
         _getPages: function(current, total){
             return {
-                current: 1,
+                current: current,
                 total: total,
                 start: 1,
                 padding: 5

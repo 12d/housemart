@@ -11,6 +11,8 @@ define(function (require, exports, module){
     	Mbox.alert('asdfas');
     	window.Mbox = Mbox;
 
-
+    module.exports = {
+        init: function(){console.log(arguments)}
+    }
     
 });

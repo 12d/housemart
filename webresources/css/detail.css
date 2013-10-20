@@ -1,5 +1,8 @@
 .hm-page-title{margin-top: 0px;}
 .hm-fields{background-color: #fff; padding-top: 20px; text-align: center;}
 .hm-fields .table{width: 95%; margin: 10px auto; text-align: left;}
+.hm-fields .table td b{font-size: 16px;}
 .hm-img-list{padding: 0; margin: 10px 0 0 0;}
 .hm-img-list li{margin: 0 2px 8px 0; display: inline-block; vertical-align: middle;}
+.hm-img-list li .img-thumbnail{height: 210px;}
+.hm-container .alert-warning{padding: 10px;}

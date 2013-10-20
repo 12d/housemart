@@ -17,6 +17,7 @@ define(function(require, exports, module){
         var self = this;
 
         self.options = options;
+        self.type = options.type;
         self.__cached = [];
     };
 
@@ -36,6 +37,18 @@ define(function(require, exports, module){
             this.options.onChange.call(this, cached.length);
             fn && fn(removed);
             return this;
+        },
+        getPicInfo: function(){
+            var self = this;
+            return {
+                type: self.type,
+                items: $.map(this.__cached, function(item, index){
+                    return {
+                        id: item.dom.attr('data-img-id'),
+                        order: index
+                    };
+                })
+            };
         },
         _move: function(item, step){
             var self = this,
@@ -63,25 +76,33 @@ define(function(require, exports, module){
         imgsWrapCount1 = imgsTabsWrap.find('li>a[data-category=J_imgsWrap-1]>i'),
         imgsWrapCount2 = imgsTabsWrap.find('li>a[data-category=J_imgsWrap-2]>i'),
         imgsWrapCount3 = imgsTabsWrap.find('li>a[data-category=J_imgsWrap-3]>i'),
-
+        typeKeyMap = {
+            '3': 'J_imgsWrap-1',
+            '2': 'J_imgsWrap-2',
+            '0': 'J_imgsWrap-3'
+        },
+        currentCategory = typeKeyMap[__appConfig.picType||'3'],
         imgsManagers = {
            'J_imgsWrap-1': new ImgsManager({
+                type: 3,
                 onChange: function(count){
                     imgsWrapCount1.html(count);
                 }
            }),
            'J_imgsWrap-2': new ImgsManager({
+                type: 2,
                 onChange: function(count){
                     imgsWrapCount2.html(count);
                 }
            }),
            'J_imgsWrap-3': new ImgsManager({
+                type: 0,
                 onChange: function(count){
                     imgsWrapCount3.html(count);
                 }
            })
         },
-        imgsManager = imgsManagers['J_imgsWrap-1'], //默认第一个tab
+        imgsManager = imgsManagers[currentCategory], //默认第一个tab
         imgsWrap = $('#J_imgsWrap'),
         imgs = imgsWrap.find('li');
 
@@ -97,6 +118,7 @@ define(function(require, exports, module){
             this.initUploader();
             this.bindDelegateEvents();
             this.initTabs();
+            this.bindEvents();
         },
         bindDelegateEvents: function(){
             imgsWrap.delegate('.hm-img-controls>.btn', 'click', function(e){
@@ -118,18 +140,26 @@ define(function(require, exports, module){
             });
         },
         uploader: null,
+        setPicType: function (type){
+            this.postData.picType = type;
+        },
         /**
          * upload component initializing
          */
         initUploader: function(){
+            this.postData = __appConfig.postData;
+
             this.uploader = $('#J_upload').uploadify({
+                formData      : this.postData,
+                checkExisting : false,
+                fileObjName   : 'imageFile',
                 swf           : require.resolve('widget/upload/uploadify.swf?1'),
-                uploader      : require.resolve('widget/upload/uploadify.php?1'),
+                uploader      : '/multiPicUpload.controller',
                 height        : 51,
                 width         : 150,
                 itemTemplate  : $('#J_imgItemTpl').html(),
-                queueID       : 'J_imgsWrap-1',
-                buttonImage   : 'webresources/img/swf-upload-btn.png',
+                queueID       : currentCategory,
+                buttonImage   : require.resolve('../img/swf-upload-btn.png?1'),
                 fileSizeLimit: '10 MB',
                 onUploadStart : function(file){
 
@@ -141,18 +171,24 @@ define(function(require, exports, module){
                 },
                 onUploadSuccess: function(file, data){
                     data = $.parseJSON(data);
+                    data = data && data.bizData;
 
-                    var imageWrap = $('#'+file.id),
-                        img;
-                    //remove progress bar
-                    imageWrap.find('.progress').remove();
+                    if(data && (data=data[0])){
 
-                    img = imageWrap.find('img');
-                    img.attr('src', data.url).attr('data-img-id', data.id);
-                    imageWrap.children().show();
-                    //add to imgsManager
+                        var imageWrap = $('#'+file.id),
+                            img;
+                        //remove progress bar
+                        imageWrap.find('.progress').remove();
 
-                    imgsManager.add(new ImgItem(imageWrap));
+                        img = imageWrap.find('img');
+                        //data={url: 'http://i1.sinaimg.cn/ty/2013/1019/U9336P6DT20131019091816.jpg', id: '123456'}  ;//test code
+                        img.attr('src', data.url);
+                        imageWrap.attr('data-img-id', data.id);
+                        imageWrap.children().show();
+                        //add to imgsManager
+
+                        imgsManager.add(new ImgItem(imageWrap));
+                    };
                 }
             });
         },
@@ -161,24 +197,45 @@ define(function(require, exports, module){
                 uploadify = self.uploader;
 
             $('#J_imgCategory a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var category = e.target.getAttribute('data-category');
+                var target = $(e.target),
+                    category = target.attr('data-category');
 
+                self.setPicType(target.attr('data-pic-type'));
                 imgsManager = imgsManagers[category];
                 uploadify.uploadify('settings', 'queueID', category);
             });
 
         },
-        getPicIds: function(){
-            $.each(imgsManagers, function(item, index){
-                
-            });       
+        getAllPicInfo: function(){
+            var managers = imgsManagers,
+                info,
+                rs = [];
+
+            $.each(typeKeyMap, function(key, value){
+                info = managers[value].getPicInfo();
+                info.items && info.items.length && rs.push(info);
+            });
+            return rs;
         },
         submit: function(){
             var self = this,
-                picIds = self.getPicIds();
+                picInfo = self.getAllPicInfo();
 
+            $.ajax({
+                url: '/ajax/addOrUpdateSort.controller',
+                method: 'post',
+                data: {
+                    houseId: self.postData.houseId,
+                    data: $.toJSON({pics: picInfo})
+                },
+                success: function(rs){
+                    if(rs.code==1){
+                        location.href='/external/myHouseList.controller';
+                    };
+                }
+            });
             //提交动作    
-            form.submit();
+            //form.submit();
         }
     };
 
